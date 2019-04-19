@@ -3,22 +3,27 @@ version: '3'
 services:
   
   endpoint:
-    image: scratch
+    image: endpoint:0.1
+    build: ./endpoint
   
   requests:
-    image: scratch
+    image: requests:0.1
+    build: ./requests
   
   pg:
-    image: scratch
+    image: pg:0.1
+    build: ./pg
 
-  zookeeper:
-    image: scratch
+  # zookeeper:
+  #   image: scratch
 
-  broker:
-    image: scratch
+  # broker:
+  #   image: scratch
 
   clustering:
-    image: scratch
+    image: clustering:0.1
+    build: ./clustering
 
   viz:
-    image: scratch
+    image: viz:0.1
+    build: ./viz
