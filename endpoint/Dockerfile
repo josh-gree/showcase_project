@@ -2,9 +2,9 @@ FROM golang:alpine as builder
 RUN mkdir /build
 ADD ./src /build/
 WORKDIR /build 
-RUN go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o main .
 
-FROM alpine
+FROM scratch
 COPY --from=builder /build/main /app/
 WORKDIR /app
 CMD ["./main"]
