@@ -1,12 +1,10 @@
 all:
 
 pull:
-	docker-compose pull
-build:
-	docker-compose build
+	BRANCH=`git rev-parse --abbrev-ref HEAD` docker-compose pull
 up:
-	docker-compose up -d
+	BRANCH=`git rev-parse --abbrev-ref HEAD` docker-compose up -d
 down: 
-	docker-compose down -v
+	BRANCH=`git rev-parse --abbrev-ref HEAD` docker-compose down -v
 logs:
 	docker-compose logs
