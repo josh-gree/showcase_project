@@ -1,0 +1,48 @@
+version: 2.1
+
+jobs:
+  build_and_push_clustering:
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - run:
+          name: "build container and tag"
+          command: |
+            docker build -t joshgree/clustering:$CIRCLE_BRANCH clustering
+  build_and_push_endpoint:
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - run:
+          name: "build container and tag"
+          command: |
+            docker build -t joshgree/endpoint:$CIRCLE_BRANCH endpoint
+  build_and_push_pg:
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - run:
+          name: "build container and tag"
+          command: |
+            docker build -t joshgree/pg:$CIRCLE_BRANCH pg
+  build_and_push_requests:
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - run:
+          name: "build container and tag"
+          command: |
+            docker build -t joshgree/requests:$CIRCLE_BRANCH requests
+  build_and_push_viz:
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - run:
+          name: "build container and tag"
+          command: |
+            docker build -t joshgree/viz:$CIRCLE_BRANCH viz
