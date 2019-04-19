@@ -10,7 +10,7 @@ logs:
 	docker-compose logs -f
 
 endpoint-run-local:
-	go run endpoint/{main.go,funcs.go}
+	go run endpoint/{main.go,utils.go}
 endpoint-test-local:
 	pushd endpoint && go test -v && popd
 endpoint-build:
