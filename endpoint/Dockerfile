@@ -1,3 +1,3 @@
-FROM python:3.7
+FROM golang:1
 
 ENTRYPOINT echo $HOSTNAME
