@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  
+  endpoint:
+    image: scratch
+  
+  requests:
+    image: scratch
+  
+  pg:
+    image: scratch
+
+  zookeeper:
+    image: scratch
+
+  broker:
+    image: scratch
+
+  clustering:
+    image: scratch
+
+  viz:
+    image: scratch
