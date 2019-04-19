@@ -1,5 +1,7 @@
 all:
 
+pull:
+	docker-compose pull
 build:
 	docker-compose build
 up:
