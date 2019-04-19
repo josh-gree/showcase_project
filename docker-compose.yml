@@ -3,15 +3,15 @@ version: '3'
 services:
   
   endpoint:
-    image: joshgree/endpoint:master
+    image: joshgree/endpoint:${BRANCH:-master}
     # build: ./endpoint
   
   requests:
-    image: joshgree/requests:master
+    image: joshgree/requests:${BRANCH:-master}
     # build: ./requests
   
   pg:
-    image: joshgree/pg:master
+    image: joshgree/pg:${BRANCH:-master}
     # build: ./pg
 
   # zookeeper:
@@ -21,9 +21,9 @@ services:
   #   image: scratch
 
   clustering:
-    image: joshgree/clustering:master
+    image: joshgree/clustering:${BRANCH:-master}
     # build: ./clustering
 
   viz:
-    image: joshgree/viz:master
+    image: joshgree/viz:${BRANCH:-master}
     build: ./viz
