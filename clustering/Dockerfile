@@ -1,3 +1,3 @@
 FROM golang:1
 
-ENTRYPOINT echo $HOSTNAME
+ENTRYPOINT echo Mofo
