@@ -1,3 +1,7 @@
 FROM golang:1
 
-ENTRYPOINT echo $HOSTNAME
+RUN mkdir /app 
+ADD ./src /app/
+WORKDIR /app 
+RUN go build -o main .
+CMD ["./main"]
