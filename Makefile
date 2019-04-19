@@ -1,10 +1,18 @@
 all:
 
-build:
-	docker-compose build
+pull:
+	BRANCH=`git rev-parse --abbrev-ref HEAD` docker-compose pull
 up:
-	docker-compose up -d
+	BRANCH=`git rev-parse --abbrev-ref HEAD` docker-compose up -d
 down: 
-	docker-compose down -v
+	BRANCH=`git rev-parse --abbrev-ref HEAD` docker-compose down -v
 logs:
-	docker-compose logs
+	docker-compose logs -f
+
+endpoint-run-local:
+	go run endpoint/{main.go,utils.go}
+endpoint-test-local:
+	pushd endpoint && go test -v && popd
+endpoint-build:
+	pushd endpoint && dep ensure -update -v && popd
+	docker build -t joshgree/endpoint:`git rev-parse --abbrev-ref HEAD` endpoint

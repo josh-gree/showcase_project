@@ -3,16 +3,20 @@ version: '3'
 services:
   
   endpoint:
-    image: endpoint:0.1
-    build: ./endpoint
+    image: joshgree/endpoint:${BRANCH:-master}
+    # build: ./endpoint
+    ports:
+      - $ENDPOINT_LOCAL_PORT:80
+    environment: 
+      GIN_MODE: release
   
   requests:
-    image: requests:0.1
-    build: ./requests
+    image: joshgree/requests:${BRANCH:-master}
+    # build: ./requests
   
   pg:
-    image: pg:0.1
-    build: ./pg
+    image: joshgree/pg:${BRANCH:-master}
+    # build: ./pg
 
   # zookeeper:
   #   image: scratch
@@ -21,9 +25,9 @@ services:
   #   image: scratch
 
   clustering:
-    image: clustering:0.1
-    build: ./clustering
+    image: joshgree/clustering:${BRANCH:-master}
+    # build: ./clustering
 
   viz:
-    image: viz:0.1
+    image: joshgree/viz:${BRANCH:-master}
     build: ./viz
