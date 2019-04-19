@@ -1,0 +1,3 @@
+FROM node:11
+
+ENTRYPOINT echo $HOSTNAME

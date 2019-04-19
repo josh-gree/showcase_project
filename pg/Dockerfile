@@ -1,0 +1,3 @@
+FROM postgres:11
+
+ENTRYPOINT echo $HOSTNAME
