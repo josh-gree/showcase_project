@@ -1,9 +1,11 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+)
 
 func main() {
-	router := gin.Default()
-	router.GET("/", RouteHandler)
+	router := SetupRouter()
+	fmt.Printf("%+v\n", router.Routes())
 	router.Run(":80")
 }
