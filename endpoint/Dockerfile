@@ -1,3 +1,9 @@
+FROM golang:alpine as tester
+RUN mkdir /testing
+ADD ./src /testing/
+WORKDIR /testing
+RUN go test -v
+
 FROM golang:alpine as builder
 RUN mkdir /build
 ADD ./src /build/
