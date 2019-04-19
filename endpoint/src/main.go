@@ -1,8 +1,9 @@
 package main
 
-import "fmt"
+import "github.com/gin-gonic/gin"
 
 func main() {
-	fmt.Println("Hello")
-	fmt.Println(Add(2, 3))
+	router := gin.Default()
+	router.GET("/", RouteHandler)
+	router.Run(":3000")
 }
