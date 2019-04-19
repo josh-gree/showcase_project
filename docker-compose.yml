@@ -3,16 +3,16 @@ version: '3'
 services:
   
   endpoint:
-    image: endpoint:0.1
-    build: ./endpoint
+    image: joshgree/endpoint:master
+    # build: ./endpoint
   
   requests:
-    image: requests:0.1
-    build: ./requests
+    image: joshgree/requests:master
+    # build: ./requests
   
   pg:
-    image: pg:0.1
-    build: ./pg
+    image: joshgree/pg:master
+    # build: ./pg
 
   # zookeeper:
   #   image: scratch
@@ -21,9 +21,9 @@ services:
   #   image: scratch
 
   clustering:
-    image: clustering:0.1
-    build: ./clustering
+    image: joshgree/clustering:master
+    # build: ./clustering
 
   viz:
-    image: viz:0.1
+    image: joshgree/viz:master
     build: ./viz
