@@ -1,3 +1,7 @@
+"""
+Script to make infinite requests to endpoint
+"""
+
 import asyncio
 from aiohttp import ClientSession, TCPConnector
 from pypeln import asyncio_task as aio
@@ -8,6 +12,9 @@ urls = repeat("http://endpoint:80/")
 
 
 async def fetch(url, session):
+    '''
+    Make an async request
+    '''
     async with session.get(url) as response:
         await response.read()
         print(response._body)
