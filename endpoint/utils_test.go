@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -31,4 +32,14 @@ func TestRouteHandler(t *testing.T) {
 	r.ServeHTTP(w, req)
 	assert.Equal(t, 200, w.Code)
 	assert.Equal(t, `{"message":"success"}`, w.Body.String())
+}
+
+func TestRandomDuration(t *testing.T) {
+	// Again probably not really needed as a test.
+	// Was going to test correct return type but
+	// of course not possible for type to be wrong...yay golang!
+	seed := int64(1)
+	params := NormParams{mu: 10, sigma: 1}
+	duration := RandomDuration(params, seed)
+	assert.Equal(t, duration, time.Duration(8766000000))
 }
