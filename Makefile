@@ -16,3 +16,6 @@ endpoint-test-local:
 endpoint-build:
 	pushd endpoint && dep ensure -update -v && popd
 	docker build -t joshgree/endpoint:`git rev-parse --abbrev-ref HEAD` endpoint
+
+requests-build:
+	docker build -t joshgree/requests:`git rev-parse --abbrev-ref HEAD` requests
