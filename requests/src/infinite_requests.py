@@ -4,12 +4,13 @@ from pypeln import asyncio_task as aio
 from itertools import repeat
 
 limit = 10
-urls = repeat("http://localhost:3000/")
+urls = repeat("http://endpoint:80/")
 
 
 async def fetch(url, session):
     async with session.get(url) as response:
-        return await response.read()
+        await response.read()
+        print(response._body)
 
 
 aio.each(
