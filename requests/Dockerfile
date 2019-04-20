@@ -7,4 +7,4 @@ WORKDIR /src/app
 RUN pip install pipenv && pipenv install --deploy
 ADD ./src .
 
-ENTRYPOINT pipenv run python infinite_requests.py # --limit $REQUEST_LIMT
+ENTRYPOINT pipenv run python infinite_requests.py --task-limit $TASK_LIMIT
