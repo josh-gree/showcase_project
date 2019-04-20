@@ -8,6 +8,7 @@ services:
   
   endpoint:
     image: joshgree/endpoint:${BRANCH:-master}
+    build: ./endpoint
     ports:
       - $ENDPOINT_LOCAL_PORT:80
     environment: 
@@ -18,11 +19,15 @@ services:
   
   requests:
     image: joshgree/requests:${BRANCH:-master}
+    build: ./requests
+    environment: 
+      TASK_LIMIT: 1
     networks:
       - public
   
   pg:
     image: joshgree/pg:${BRANCH:-master}
+    build: ./pg
     networks:
       - private
 
@@ -34,10 +39,12 @@ services:
 
   clustering:
     image: joshgree/clustering:${BRANCH:-master}
+    build: ./clustering
     networks:
       - private
 
   viz:
     image: joshgree/viz:${BRANCH:-master}
+    build: ./viz
     networks:
       - private
