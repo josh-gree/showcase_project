@@ -23,7 +23,7 @@ services:
     image: joshgree/requests:${BRANCH:-master}
     build: ./requests
     environment: 
-      TASK_LIMIT: 1
+      TASK_LIMIT: $TASK_LIMIT
     networks:
       - public
     depends_on:
@@ -56,6 +56,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - private
+    ports: 
+      - $BROKER_ADVERTISED_LISTNER:$BROKER_ADVERTISED_LISTNER
 
   clustering:
     image: joshgree/clustering:${BRANCH:-master}
