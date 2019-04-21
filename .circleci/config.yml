@@ -106,3 +106,4 @@ workflows:
       - build_and_push_pg
       - build_and_push_requests
       - build_and_push_viz
+      - build_and_push_stream_topic_to_pg
