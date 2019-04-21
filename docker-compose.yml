@@ -16,6 +16,8 @@ services:
     networks:
       - public
       - private
+    depends_on:
+      - broker
   
   requests:
     image: joshgree/requests:${BRANCH:-master}
@@ -24,6 +26,8 @@ services:
       TASK_LIMIT: 1
     networks:
       - public
+    depends_on:
+      - endpoint
   
   pg:
     image: joshgree/pg:${BRANCH:-master}
@@ -31,11 +35,27 @@ services:
     networks:
       - private
 
-  # zookeeper:
-  #   image: scratch
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: $ZOOKEEPER_CLIENT_PORT
+      ZOOKEEPER_TICK_TIME: 2000
+    ports: 
+      - $ZOOKEEPER_CLIENT_PORT:$ZOOKEEPER_CLIENT_PORT
+    networks:
+      - private
 
-  # broker:
-  #   image: scratch
+  broker:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:$ZOOKEEPER_CLIENT_PORT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:$BROKER_ADVERTISED_LISTNER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - private
 
   clustering:
     image: joshgree/clustering:${BRANCH:-master}
