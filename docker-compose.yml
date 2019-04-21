@@ -34,6 +34,12 @@ services:
     build: ./pg
     networks:
       - private
+    environment:
+      POSTGRES_USER: pg
+      POSTGRES_PASSWORD: pg
+      POSTGRES_DB: pg
+    ports:
+      - 5432:5432
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -64,6 +70,21 @@ services:
     build: ./clustering
     networks:
       - private
+
+  stream_topic_to_pg:
+    image: joshgree/stream_topic_to_pg:${BRANCH:-master}
+    build: ./stream_topic_to_pg
+    networks:
+      - private
+    restart: always
+    environment:
+      KAFKA_BROKER_URL: broker:$BROKER_ADVERTISED_LISTNER
+      TRANSACTIONS_TOPIC: response-time-per-route
+      PG_URI: postgres://pg:pg@pg:5432/pg
+    depends_on:
+      - zookeeper
+      - broker
+      - pg
 
   viz:
     image: joshgree/viz:${BRANCH:-master}
