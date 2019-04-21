@@ -21,3 +21,6 @@ endpoint-build:
 
 requests-build:
 	docker build -t joshgree/requests:`git rev-parse --abbrev-ref HEAD` requests
+
+kafka-view-response-time-topic:
+	docker-compose exec broker kafka-console-consumer --bootstrap-server localhost:9092 --topic response-time-per-route --from-beginning
