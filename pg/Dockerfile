@@ -1,3 +1,4 @@
 FROM postgres:11
 
-ENTRYPOINT echo $HOSTNAME
+ADD --chown=postgres ./sql/* /docker-entrypoint-initdb.d/
+RUN chown -R postgres /docker-entrypoint-initdb.d
