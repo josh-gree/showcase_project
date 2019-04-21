@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"math"
 	"math/rand"
@@ -8,11 +10,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	kafka "github.com/segmentio/kafka-go"
 )
 
 type KafkaMsg struct {
-	route         string
-	response_time time.Duration
+	Route        string
+	ResponseTime time.Duration
 }
 
 type NormParams struct {
@@ -59,6 +62,12 @@ func RandomDuration(params NormParams, seed int64) time.Duration {
 	return duration
 }
 
+var writer = kafka.NewWriter(kafka.WriterConfig{
+	Brokers:  []string{"broker:9092"},
+	Topic:    "response-time-per-route",
+	Balancer: &kafka.LeastBytes{},
+})
+
 func KafkaMiddleware() gin.HandlerFunc {
 	out := gin.DefaultWriter
 	return func(c *gin.Context) {
@@ -68,7 +77,18 @@ func KafkaMiddleware() gin.HandlerFunc {
 
 		response_time := time.Since(t)
 		route := c.Request.URL.Path
-		msg := KafkaMsg{route: route, response_time: response_time}
-		fmt.Fprintf(out, "From kafka middleware - %+v\n", msg)
+		msg := KafkaMsg{Route: route, ResponseTime: response_time}
+		json_msg, err := json.Marshal(msg)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Fprintf(out, "From kafka middleware - %s\n", json_msg)
+
+		writer.WriteMessages(context.Background(),
+			kafka.Message{
+				Key:   []byte("reponse-time-and-route"),
+				Value: []byte(json_msg),
+			},
+		)
 	}
 }
