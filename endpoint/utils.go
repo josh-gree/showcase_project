@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 	"net/http"
@@ -8,6 +9,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+
+type KafkaMsg struct {
+	route         string
+	response_time time.Duration
+}
 
 type NormParams struct {
 	mu    float64
@@ -27,6 +33,7 @@ var groups = []Group{
 
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
+	router.Use(KafkaMiddleware())
 	router.GET("/", RouteHandler)
 	return router
 }
@@ -50,4 +57,18 @@ func RandomDuration(params NormParams, seed int64) time.Duration {
 	normal_draw := math.Abs(rand.NormFloat64()*params.sigma + params.mu)
 	duration := time.Duration(normal_draw*1000) * time.Millisecond
 	return duration
+}
+
+func KafkaMiddleware() gin.HandlerFunc {
+	out := gin.DefaultWriter
+	return func(c *gin.Context) {
+		t := time.Now()
+
+		c.Next()
+
+		response_time := time.Since(t)
+		route := c.Request.URL.Path
+		msg := KafkaMsg{route: route, response_time: response_time}
+		fmt.Fprintf(out, "From kafka middleware - %+v\n", msg)
+	}
 }
