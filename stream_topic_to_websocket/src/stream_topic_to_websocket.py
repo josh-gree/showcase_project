@@ -9,13 +9,11 @@ from kafka import KafkaConsumer
 from kafka.errors import NoBrokersAvailable
 
 KAFKA_BROKER_URL = os.environ.get("KAFKA_BROKER_URL")
-TRANSACTIONS_TOPIC = os.environ.get("TRANSACTIONS_TOPIC")
+TOPIC = os.environ.get("TOPIC")
 
 try:
     consumer = KafkaConsumer(
-        TRANSACTIONS_TOPIC,
-        bootstrap_servers=KAFKA_BROKER_URL,
-        value_deserializer=json.loads,
+        TOPIC, bootstrap_servers=KAFKA_BROKER_URL, value_deserializer=json.loads
     )
 except NoBrokersAvailable:
     sys.exit("No broker available")
