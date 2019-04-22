@@ -34,6 +34,5 @@ for ind, message in enumerate(consumer):
     request_time = pendulum.parse(msg["RequestTimeStamp"])
     row = ResponseTime(route=route, time=time, request_time=request_time)
     session.add(row)
-    if ind % 100 == 0:
-        session.commit()
-        print(session.query(ResponseTime).all())
+    session.commit()
+
