@@ -70,6 +70,11 @@ services:
     build: ./clustering
     networks:
       - private
+    restart: always
+    environment:
+      KAFKA_BROKER_URL: broker:$BROKER_ADVERTISED_LISTNER
+      PARAMS_TOPIC: cluster-params
+      BOOTSTRAP_SERVERS: broker:$BROKER_ADVERTISED_LISTNER
 
   stream_topic_to_pg:
     image: joshgree/stream_topic_to_pg:${BRANCH:-master}
@@ -94,7 +99,7 @@ services:
     restart: always
     environment:
       KAFKA_BROKER_URL: broker:$BROKER_ADVERTISED_LISTNER
-      TRANSACTIONS_TOPIC: response-time-per-route
+      TOPIC: cluster-params
     ports:
       - 5678:5678
     depends_on:
