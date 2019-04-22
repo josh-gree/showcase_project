@@ -97,6 +97,22 @@ jobs:
           name: Push images to Docker cloud
           command: |
             docker push joshgree/stream_topic_to_pg:$CIRCLE_BRANCH
+  build_and_push_stream_topic_to_websocket:
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - run:
+          name: "build container and tag"
+          command: |
+            docker build -t joshgree/stream_topic_to_websocket:$CIRCLE_BRANCH stream_topic_to_websocket
+      - run:
+          name: Log in to docker cloud
+          command: docker login --username $DOCKER_CLOUD_USER --password $DOCKER_CLOUD_PASSWORD
+      - run:
+          name: Push images to Docker cloud
+          command: |
+            docker push joshgree/stream_topic_to_websocket:$CIRCLE_BRANCH
 
 workflows:
   run_build_pipeline:
@@ -107,3 +123,4 @@ workflows:
       - build_and_push_requests
       - build_and_push_viz
       - build_and_push_stream_topic_to_pg
+      - build_and_push_stream_topic_to_websocket

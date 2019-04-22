@@ -7,4 +7,4 @@ WORKDIR /src/app
 RUN pip install pipenv && pipenv install --deploy
 ADD ./src .
 
-ENTRYPOINT pipenv run python stream_topic_to_pg.py
+ENTRYPOINT pipenv run python stream_topic_to_websocket.py

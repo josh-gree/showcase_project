@@ -86,6 +86,21 @@ services:
       - broker
       - pg
 
+  stream_topic_to_websocket:
+    image: joshgree/stream_topic_to_websocket:${BRANCH:-master}
+    build: ./stream_topic_to_websocket
+    networks:
+      - private
+    restart: always
+    environment:
+      KAFKA_BROKER_URL: broker:$BROKER_ADVERTISED_LISTNER
+      TRANSACTIONS_TOPIC: response-time-per-route
+    ports:
+      - 5678:5678
+    depends_on:
+      - zookeeper
+      - broker
+
   viz:
     image: joshgree/viz:${BRANCH:-master}
     build: ./viz

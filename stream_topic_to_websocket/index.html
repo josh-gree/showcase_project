@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebSocket demo</title>
+</head>
+
+<body>
+    <script>
+        var ws = new WebSocket("ws://localhost:5678/")
+        ws.onmessage = function (event) {
+            console.log(event.data);
+        };
+    </script>
+</body>
+
+</html>
