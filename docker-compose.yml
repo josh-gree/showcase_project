@@ -91,3 +91,5 @@ services:
     build: ./viz
     networks:
       - private
+    ports:
+      - 8080:80
