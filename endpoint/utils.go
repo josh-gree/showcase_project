@@ -14,8 +14,9 @@ import (
 )
 
 type KafkaMsg struct {
-	Route        string
-	ResponseTime time.Duration
+	Route            string
+	ResponseTime     time.Duration
+	RequestTimeStamp string
 }
 
 type NormParams struct {
@@ -71,13 +72,13 @@ var writer = kafka.NewWriter(kafka.WriterConfig{
 func KafkaMiddleware() gin.HandlerFunc {
 	out := gin.DefaultWriter
 	return func(c *gin.Context) {
-		t := time.Now()
+		request_time := time.Now()
 
 		c.Next()
 
-		response_time := time.Since(t)
+		response_time := time.Since(request_time)
 		route := c.Request.URL.Path
-		msg := KafkaMsg{Route: route, ResponseTime: response_time}
+		msg := KafkaMsg{Route: route, ResponseTime: response_time, RequestTimeStamp: request_time.Format(time.RFC3339)}
 		json_msg, err := json.Marshal(msg)
 		if err != nil {
 			fmt.Println(err)

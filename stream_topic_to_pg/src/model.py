@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -13,3 +13,4 @@ class ResponseTime(Base):
     id = Column(Integer, primary_key=True)
     route = Column(String)
     time = Column(Integer)
+    request_time = Column(DateTime)

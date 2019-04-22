@@ -1,6 +1,7 @@
 import os
 import json
 import sys
+import pendulum
 
 from model import ResponseTime
 from kafka import KafkaConsumer
@@ -29,8 +30,9 @@ session = Session()
 for ind, message in enumerate(consumer):
     msg = message.value
     route = msg["Route"]
-    time = msg["ResponseTime"] / 1e-9  # in seconds
-    row = ResponseTime(route=route, time=time)
+    time = msg["ResponseTime"] / 1e9  # in seconds
+    request_time = pendulum.parse(msg["RequestTimeStamp"])
+    row = ResponseTime(route=route, time=time, request_time=request_time)
     session.add(row)
     if ind % 100 == 0:
         session.commit()
