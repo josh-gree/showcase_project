@@ -24,11 +24,7 @@ except NoBrokersAvailable:
 async def consume_to_ws(websocket, path):
     while True:
         for message in consumer:
-            msg_dict = {
-                "route": message.value["Route"],
-                "response_time_in_s": message.value["ResponseTime"] / 1e-9,
-            }
-            await websocket.send(json.dumps(msg_dict))
+            await websocket.send(json.dumps(message.value))
 
 
 start_server = websockets.serve(consume_to_ws, "0.0.0.0", 5678)
