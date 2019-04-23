@@ -3,6 +3,11 @@ version: '3'
 networks:
   public:
   private:
+  fixed:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
 
 services:
   
@@ -95,7 +100,9 @@ services:
     image: joshgree/stream_topic_to_websocket:${BRANCH:-master}
     build: ./stream_topic_to_websocket
     networks:
-      - private
+      private:
+      fixed:
+        ipv4_address: 10.5.0.2
     restart: always
     environment:
       KAFKA_BROKER_URL: broker:$BROKER_ADVERTISED_LISTNER
@@ -110,6 +117,8 @@ services:
     image: joshgree/viz:${BRANCH:-master}
     build: ./viz
     networks:
-      - private
+      fixed:
+        ipv4_address: 10.5.0.3
+    restart: always
     ports:
       - 8080:80

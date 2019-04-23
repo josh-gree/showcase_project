@@ -1,2 +1,4 @@
 **/vendor
 **/.venv
+
+**/.ipynb_checkpoints
