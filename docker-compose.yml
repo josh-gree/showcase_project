@@ -111,5 +111,6 @@ services:
     build: ./viz
     networks:
       - private
+    restart: always
     ports:
       - 8080:80
