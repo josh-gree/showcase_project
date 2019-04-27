@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 kafka-python = "*"
-websockets = "*"
+tornado = "*"
 
 [dev-packages]
 ipython = "*"
