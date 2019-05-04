@@ -1,7 +1,9 @@
 FROM node:11
-COPY ./viz /app
 WORKDIR /app
-RUN npm install && npm run build
+COPY ./viz/package.json ./viz/package-lock.json ./
+RUN npm install
+COPY ./viz .
+RUN npm run build
 
 FROM nginx
 RUN mkdir /app
