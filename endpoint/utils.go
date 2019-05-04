@@ -30,9 +30,9 @@ type Group struct {
 }
 
 var groups = []Group{
-	{id: 1, params: NormParams{mu: 1.2, sigma: 0.1}},
-	{id: 2, params: NormParams{mu: 9.4, sigma: 2.3}},
-	{id: 3, params: NormParams{mu: 5.1, sigma: 0.3}},
+	{id: 1, params: NormParams{mu: 5.1, sigma: 1}},
+	{id: 2, params: NormParams{mu: 19.4, sigma: 2}},
+	{id: 3, params: NormParams{mu: 10.1, sigma: 3}},
 }
 
 func SetupRouter() *gin.Engine {
