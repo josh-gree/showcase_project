@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Viz msg="Hello World"/>
+    <Viz/>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import Viz from "./components/Viz.vue";
 
 export default {
-  name: "App",
+  name: "app",
   components: {
     Viz
   }
