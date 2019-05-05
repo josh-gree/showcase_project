@@ -31,12 +31,8 @@ export default {
   },
   data() {
     return {
-      params: {
-        means: [],
-        vars: []
-      },
+      params: {},
       nSamples: 3333,
-      //   wsReady: false,
       width: 1300,
       height: 600,
       wsReady: false
@@ -47,7 +43,7 @@ export default {
       return this.wsReady && this.dataReady;
     },
     dataReady() {
-      return this.params.vars.length != 0 && this.params.means.length != 0;
+      return Object.keys(this.params).length !== 0;
     },
     samples() {
       const mus = this.params.means;
